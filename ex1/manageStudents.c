@@ -468,75 +468,67 @@ float bestRatioCheck(float bestRatio, char bestStudent[60], struct Student aStud
     return bestRatio;
 }
 /**
- * Display message if the number of args is wrong
+ *
+ * @param argc Number of arguments entered
+ * @param argv List of the arguments entered
+ * @return 0 if the program worked well, 1 if not
  */
-void getErrorArg()
+int main(int argc, char *argv[])
 {
-    printf("ERROR: Number of parameters entered is different than 6\n");
-    printf("in line %d\n", lineCounter);
-    lineCounter += 1;
-}
-/**
- * Checks what parameter was entered and executes functions accordingly
- * @param student Input of student
- * @param aStudent Student represented by a struct object
- * @param argv Argument entered
- * @param stopper Stopper to check whether was entered more than 6 args or not
- * @param students List of students
- * @param bestRatio Best ratio of students entered
- * @param p Pointer to student
- * @param bestStudent Best student with the best ratio
- * @return 0 if everything goes well, else 1
- */
-int getInput(char student[MAX_SIZE_INPUT])
-{
-    printf("Enter student info. To exit press q, then enter\n");
-    if (fgets(student, MAX_SIZE_INPUT, stdin) == NULL)
+    struct Student aStudent;
+    char stopper[FIELD_SIZE];
+    char bestStudent[MAX_SIZE_INPUT];
+    float bestRatio = 0;
+    char student[MAX_SIZE_INPUT];
+    char *p = student;
+    struct Student students[MAX_STUDENTS];
+    if (argc != 2)
     {
-        printf("ERROR: Input not valid\n");
-        printf("in line %d\n", lineCounter);
+        printf("USAGE: sortStudents <action>\n");
         return 1;
     }
-    return 0;
-}
-
-int actionExecution(char student[MAX_SIZE_INPUT], struct Student aStudent, char *argv[],char stopper[FIELD_SIZE],
-    struct Student students[MAX_STUDENTS],float bestRatio, char *p,char bestStudent[MAX_SIZE_INPUT])
-{
-    if (strcmp (argv[1], "best") == 0) 
+    else if (strcmp (argv[1], "best") == 0)
     {
-        while (1) 
+        while (1)
         {
-            if (getInput(student) != 0) 
+            printf("Enter student info. To exit press q, then enter\n");
+            if (fgets(student, MAX_SIZE_INPUT, stdin) == NULL)
             {
+                printf("ERROR: Input not valid\n");
+                printf("in line %d\n", lineCounter);
                 return 1;
             }
+
             if (sscanf(student, "%[^,\n],%[^,\n],%[^,\n],%[^,\n],%[^,\n],%[^,\n], %[^,\n]",
                 aStudent.idNumber, aStudent.name, aStudent.grade, aStudent.age,
-                aStudent.country, aStudent.city, stopper) == 6) {
+                aStudent.country, aStudent.city, stopper) == 6)
+            {
                 if (checkValidity(aStudent.idNumber, aStudent.name, aStudent.grade,
-                    aStudent.age, aStudent.country, aStudent.city) == 0) 
+                    aStudent.age, aStudent.country, aStudent.city) == 0)
                 {
                     students[studentCounter] = aStudent;
                     studentCounter += 1;
                     bestRatio = bestRatioCheck(bestRatio, bestStudent, aStudent, p);
                 }
                 lineCounter += 1;
-            } 
-            else if (strcmp(student, "q\n") == 0) 
+            }
+            else if (strcmp(student, "q\n") == 0)
             {
                 if (strcmp(bestStudent, "") == 0)
                 {
                     break;
-                } 
-                else 
+                }
+                else
                 {
                     printf("best student info is: %s", bestStudent);
                     return 0;
                 }
-            } else 
+            }
+            else
             {
-                getErrorArg();
+                printf("ERROR: Number of parameters entered is different than 6\n");
+                printf("in line %d\n", lineCounter);
+                lineCounter += 1;
             }
         }
     }
@@ -544,10 +536,8 @@ int actionExecution(char student[MAX_SIZE_INPUT], struct Student aStudent, char 
     {
         while (1)
         {
-            if (getInput(student) != 0)
-            {
-                return 1;
-            }
+            printf("Enter student info. To exit press q, then enter\n");
+            fgets(student, 65, stdin);
             if (sscanf(student, "%[^,\n],%[^,\n],%[^,\n],%[^,\n],%[^,\n],%[^,\n], %[^,\n]",
                 aStudent.idNumber, aStudent.name, aStudent.grade, aStudent.age,
                 aStudent.country, aStudent.city, stopper) == 6)
@@ -569,7 +559,9 @@ int actionExecution(char student[MAX_SIZE_INPUT], struct Student aStudent, char 
             }
             else
             {
-                getErrorArg();
+                printf("ERROR: Number of parameters entered is different than 6\n");
+                printf("in line %d\n", lineCounter);
+                lineCounter += 1;
             }
         }
     }
@@ -577,13 +569,11 @@ int actionExecution(char student[MAX_SIZE_INPUT], struct Student aStudent, char 
     {
         while (1)
         {
-            if (getInput(student) != 0)
-            {
-                return 1;
-            }
+            printf("Enter student info. To exit press q, then enter\n");
+            fgets(student, MAX_SIZE_INPUT, stdin);
             if (sscanf(student, "%[^,\n],%[^,\n],%[^,\n],%[^,\n],%[^,\n],%[^,\n], %[^,\n]",
                 aStudent.idNumber, aStudent.name, aStudent.grade, aStudent.age,
-                aStudent.country, aStudent.city, stopper) == 6) 
+                aStudent.country, aStudent.city, stopper) == 6)
             {
                 if (checkValidity(aStudent.idNumber, aStudent.name, aStudent.grade, aStudent.age, aStudent.country,
                     aStudent.city) == 0)
@@ -601,7 +591,9 @@ int actionExecution(char student[MAX_SIZE_INPUT], struct Student aStudent, char 
             }
             else
             {
-                getErrorArg();
+                printf("ERROR: Number of parameters entered is different than 6\n");
+                printf("in line %d\n", lineCounter);
+                lineCounter += 1;
             }
         }
     }
@@ -610,40 +602,5 @@ int actionExecution(char student[MAX_SIZE_INPUT], struct Student aStudent, char 
         printf("USAGE: sortStudents <action>\n");
         return 1;
     }
-    return 0;
-}
-/**
- *
- * @param argc Number of arguments entered
- * @param argv List of the arguments entered
- * @return 0 if the program worked well, 1 if not
- */
-int main(int argc, char *argv[])
-{
-    struct Student aStudent;
-    char stopper[FIELD_SIZE];
-    char bestStudent[MAX_SIZE_INPUT];
-    float bestRatio = 0;
-    char student[MAX_SIZE_INPUT];
-    char *p = student;
-    struct Student students[MAX_STUDENTS];
-    if (argc != 2)
-    {
-        printf("USAGE: sortStudents <action>\n");
-        return 1;
-    }
-    else
-    {
-        if (actionExecution(student, aStudent, argv,stopper,students, bestRatio, p,bestStudent) == 0)
-        {
-            return 0;
-        }
-        else
-        {
-            return 1;
-        }
-    }
-
-
     return 0;
 }
