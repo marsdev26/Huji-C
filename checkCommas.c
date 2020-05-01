@@ -3,18 +3,9 @@ int checkPartsList(const char line[1025])
     int counter = 0;
     for (int j = 0; line[j] != '\n'; j++)
     {
-        if (line[j + 1] == '\n')
+        if (line[(strlen(line)-2)] == ',')
         {
-            if (line[j] == ',')
-            {
-                printf("In");
-                return EXIT_FAILURE;
-            }
-            else
-            {
-                counter++;
-                continue;
-            }
+            return EXIT_FAILURE;
         }
         if(j == 0 && line[j] != ',')
         {
@@ -25,6 +16,7 @@ int checkPartsList(const char line[1025])
         {
             return EXIT_FAILURE;
         }
+
         else if (counter == 1)
         {
             if (line[j] == ',')
@@ -37,6 +29,7 @@ int checkPartsList(const char line[1025])
                 return EXIT_FAILURE;
             }
         }
+
         else if (counter == 0)
         {
             if (line[j] == ',')
