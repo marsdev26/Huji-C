@@ -1,8 +1,9 @@
 void concreteDeletionParentNonNULLCase(RBTree *tree, Node** nodeToDelete, Node* nodeOfChild)
 {
-    if ((*nodeToDelete)->parent->right == *nodeToDelete)
+    if ((*nodeToDelete)->parent->right != *nodeToDelete)
     {
-        (*nodeToDelete)->parent->right = nodeOfChild;
+
+        (*nodeToDelete)->parent->left = nodeOfChild;
         if (nodeOfChild != NULL)
         {
             nodeOfChild->parent = (*nodeToDelete)->parent;
@@ -13,7 +14,7 @@ void concreteDeletionParentNonNULLCase(RBTree *tree, Node** nodeToDelete, Node* 
     }
     else
     {
-        (*nodeToDelete)->parent->left = nodeOfChild;
+        (*nodeToDelete)->parent->right = nodeOfChild;
         if (nodeOfChild != NULL)
         {
             nodeOfChild->parent = (*nodeToDelete)->parent;
@@ -28,7 +29,6 @@ void concreteDeletionParentNonNULLCase(RBTree *tree, Node** nodeToDelete, Node* 
     *nodeToDelete = NULL;
      */
 }
-
 void concreteDeletionParentNULLCase(RBTree *tree, Node** nodeToDelete, Node* nodeOfChild)
 {
     tree->freeFunc(tree->root->data);
